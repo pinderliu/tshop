@@ -1,0 +1,110 @@
+<!-- 左边 -->
+<div class="span2">
+
+    <div class="main-left-col">
+
+        <h1><i class="icon-shopping-cart icon-large"></i> Adminize</h1>
+
+        <ul class="side-nav">
+
+            <li class="title">
+                <a href="{:url('/')}"><i class="icon-home"></i>首页</a>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="collapse" data-target="#members-dropdown" href="#"><i class="icon-group"></i>
+                    用户管理 <b class="caret"></b></a>
+                <ul id="members-dropdown" class="collapse">
+                    <!-- <li><a href="{:url('/admin/user/list')}">用户列表</a></li> -->
+                    <!-- <li><a href="{:url('/admin/user/add')}">添加用户</a></li> -->
+                    <li><a href="javascript:;">用户</a></li>
+                    <li><a href="javascript:;" onclick="showAtRight('/admin/user/index')">用户列表</a></li>
+                </ul>
+            </li>
+
+        </ul>
+
+    </div> <!-- end main-left-col -->
+
+</div> <!-- end span2 -->
+
+<script src="{:config('static_admin')}/js/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.collapse li').click(function () {
+            // alert('sssss');
+            $(this).addClass('active')
+                .siblings().removeClass("active");
+        });
+
+        $('.title').click(function () {
+            // alert('sssss');
+            $(this).addClass('active')
+                .siblings().removeClass("active");
+        });
+    });
+
+
+
+    function showAtRight(url) {
+        $url = url; //要用变量来接收
+        alert($url);
+        var xmlhttp;
+        //判断浏览器类型
+        if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else { // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        //ajax
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                document.getElementById("content").innerHTML = xmlhttp.responseText;
+            }
+        }
+        // xmlhttp.open("GET", "{:url('/admin/user/add')}", true);//数据写死的
+        xmlhttp.open("GET", $url, true);
+        xmlhttp.send();
+    };
+
+
+    //add功能的函数
+    addUser = function () {
+        var username = $.trim($("#username").val());
+        var password = $.trim($("#password").val());
+        // var repassword = $.trim($("#repassword").val());
+        //可以加一个if验证
+        if (!username) {
+            alert('用户名不能为空');
+            return false;
+        }
+        var send = {
+            'username': username,
+            'password': password,
+            // 'repassword': repassword
+        };
+        var formData = $("#userform").serialize();
+        console.log(send);
+        console.log(formData);
+        alert(formData);
+        // $.get("{:url('/admin/user/ajaxAddUser')}",send,function(res){
+        //     console.log(res);
+        // },'json');   
+        $.ajax({
+            type: "post",
+            // url: "{:url('/admin/user/reg')}", //数据传输的控制器方法
+            url: "{:url('/admin/user/ajaxAddUser')}", //数据传输的控制器方法
+            data: formData, //这里data传递过去的是序列化以后的字符串
+            success: function (res) {
+                console.log(res);
+                // if(res.code == 200){
+                //     $("#addInfo").append(data); //获取成功以后输出返回值
+                // }else{
+                    alert(res.msg);
+                // }
+                
+            }
+        });
+       
+
+    };
+</script>
