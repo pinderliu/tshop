@@ -23,7 +23,7 @@ class User extends Validate{
 	];
 	//场景
 	protected $scene = [
-		'add' =>['username','password','repassword'],
+		'ajaxAddUser' =>['username','password','repassword'],
 		// 'upd' =>['password','repassword'],
 		// 'login' =>['username'=>"require",'password','captcha']
 	];

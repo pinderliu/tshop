@@ -23,16 +23,14 @@
 
 // 以上为tp5.1原本的东西
 
-// use think\Route;
+// use think\Route;后台页面
 Route::get('/','admin/index/index');
 Route::get('admin/index/index','admin/index/index');
 
 //后台路由分组
 Route::group('admin',function(){
-    Route::rule('/user/index','admin/user/index');
-    Route::rule('/user/add','admin/user/add');
-    Route::rule('/user/ajaxAddUser','admin/user/ajaxAddUser');
-    Route::rule('/user/reg','admin/user/reg');
+    Route::rule('/user/index','admin/user/index');//后台首页
+    Route::rule('/user/ajaxAddUser','admin/user/ajaxAddUser');//用户添加功能的路由
 
 });
 
