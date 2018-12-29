@@ -26,13 +26,6 @@ class UserController extends Controller{
     //     }
     //     return $this->fetch();
     // }
-    // public function add(){
-    //         return json("ajax成功！");
-    // }
-    // public function add(){
-        
-    //     return $this->fetch();
-    // }
     public function index(){
         return $this->fetch();
     }
@@ -46,14 +39,8 @@ class UserController extends Controller{
             foreach ($_data as $k => $v) {
                 $data[$k]=trim($v);
             }
-            // $add = User::name('user')->insert($data);
-            // if($add){
-            //     return json(['code' => 200,'msg'=>'删除成功']);
-            // }else{
-            //     return json(['code'=>-2,'msg'=>'添加失败！please again!']);
-            // }
             $addModel = new User;
-            if($addModel->insert($data)){
+            if($addModel->save($data)){
                 return json(['error'=>0,'msg'=>'添加成功！']);
             }else{
                 return json(['error'=>1,'msg'=>'添加失败！please again!']);
