@@ -55,7 +55,8 @@
 									<input name="repassword" id="repassword" type="password" class="input-large" placeholder="确认密码">
 
 									<input type="submit" value="添加用户" class="btn btn-primary" onclick="addUser();">
-									<div class="actions" id="addInfo"></div>
+									<!-- <span class="actions" id="succInfo">wwwww</span> -->
+									<div class="actions" id="errorInfo"></div>
 								</form>
 							</div>
 
@@ -70,25 +71,37 @@
 							<div class="slate">
 
 								<div class="page-header">
-									<h2>Listings</h2>
+									<h2>用户列表</h2>
 								</div>
 
 								<table class="orders-table table">
 									<thead>
 										<tr>
-											<th>Listing</th>
-											<th class="actions">Actions</th>
+											<th>名字</th>
+											<th class="actions">操作</th>
 										</tr>
 									</thead>
 									<tbody>
+										<tr id="newlist">
+										</tr>
+										{foreach name="usersData" item='v'}
 										<tr>
-											<td><a href="form.html">Listing title</a> <span class="label label-info">Item Status</span><br /><span class="meta">Added
-													Today</span></td>
-											<td class="actions">
-												<a class="btn btn-small btn-danger" data-toggle="modal" href="#removeItem">Remove</a>
-												<a class="btn btn-small btn-primary" href="form.html">Edit</a>
-											</td>
+											<td>
+												<!-- <span class="meta">{$key}</span> -->
+												<a href="javascript:;">{$v['username']}</a>
+												<span class="label label-info">管理员</span>
+												<br />
+												<!-- <span class="meta">Added Today</span> -->
+												<span class="divider">创建时间：{$v['create_time']}&nbsp; </span>
+												<span class="divider">最后修改：{$v['update_time']}</span>
 
+											</td>
+											<td class="actions">
+												<a class="btn btn-small btn-danger" data-toggle="modal" href="javascript:;">删除</a>
+												<a class="btn btn-small btn-primary" href="javascript:;">编辑</a>
+											</td>
+										</tr>
+										{/foreach}
 									</tbody>
 								</table>
 

@@ -17,7 +17,7 @@ return [
     //定义前后台资源目录
     'static_admin'           =>'/static/admin',
     'static_home'            =>'/static/home',
-    'password_salt'          =>'$^&FHGUYT^&',
+    'password_salt'          =>'$^&HOUYUS^&',
     //自己加的
     // 'admin_add'            =>'{:url("/admin/user/list")}',
 

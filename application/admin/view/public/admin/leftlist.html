@@ -28,7 +28,7 @@
 </div> <!-- end span2 -->
 
 <!-- 下面是js代码 -->
-<script src="{:config('static_admin')}/js/jquery.min.js"></script>
+<script src="{:config('static_admin')}/js/jquery.js"></script>
 <script type="text/javascript">
     //这是左边导航页的点击action选中的事件
     $(function () {
@@ -67,25 +67,13 @@
         // xmlhttp.open("GET", "{:url('/admin/user/add')}", true);//数据写死的
         xmlhttp.open("GET", $url, true);
         xmlhttp.send();
+        
     };
     //function showAtRight end!
 
 
     //add添加功能的函数，添加用户按键点击触发
     addUser = function () {
-        // var username = $.trim($("#username").val());
-        // var password = $.trim($("#password").val());
-        // // var repassword = $.trim($("#repassword").val());
-        //可以加一个if验证
-        // if (!username) {
-        //     alert('用户名不能为空');
-        //     return false;
-        // }
-        // var send = {
-        //     'username': username,
-        //     'password': password,
-        //     // 'repassword': repassword
-        // };
         var formData = $("#userform").serialize();
         // alert(formData);//用作查看输入的数据是否取得到
         $.ajax({
@@ -94,15 +82,41 @@
             data: formData, //这里data传递过去的是序列化以后的字符串
             success: function (res) {
                 console.log(res);
+                console.log('success里面：' + res.info);
                 $("#username").val("");
                 $("#password").val("");
-                $("#repassword").val("");
-                $("#addInfo").append(res.msg); //获取成功以后输出返回值    
-            }
+                $("#repassword").val(""); 
+                $("#errorInfo").append(res.msg); //获取成功以后输出返回值  
+
+                if(res.error==0){
+                    var str = "";
+                    var jsonData = res.info;//接收从后台传过来的info的那个数据，即倒序搜索出来的
+                    var jsonData = JSON.parse(jsonData);//JSON.parse()转化成json对象，不然使用$.each()会报错
+ 
+                    //$.each()遍历json，感觉很牛逼，具体的到时可以百度搜搜看
+                    $.each(jsonData,function(i,data){
+                        str += 
+                            "<td>" + 
+                            "<a href='javascript:;'>" + data.username + "</a>" +
+                            "<span class='label label-info'>" + "管理员" + "</span>" +
+                            "<br/>" +
+                            "<span class='divider'>" + "创建时间" + data.create_time + "</span>" +
+                            "<span class='divider'>" + "最后修改时间" +  data.update_time + "</span>" +
+                            "</td>" +
+                            "<td class='actions'>" +
+                            "<a class='btn btn-small btn-danger' data-toggle='modal' href='javascript:;'>" + "删除" + "</a>" +
+                            "<a class='btn btn-small btn-primary' href='javascript:;'>" + "编辑" + "</a>" +
+                            "</td>";
+                    });
+                    document.getElementById("newlist").innerHTML = str;//把上面拼接的str标签和数据什么的搞在容器newlist里面
+                }
+                
+            },
         });
         //给一个延时，3秒之后数据返回的那个地方置空
         setTimeout(function () {
-            $("#addInfo").html("");
+            // $("#succInfo").html("");
+            $("#errorInfo").html("");
         }, 3000);
     };
     //function addUser end!
